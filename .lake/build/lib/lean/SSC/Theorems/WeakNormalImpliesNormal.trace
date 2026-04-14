@@ -1,0 +1,30 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["78a5dc7616c036d8.olean"],
+  "i": "a3fbe64d9da5ab96.ilean",
+  "c": "6b071242a60c7303.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1\\bin\\lean.exe C:\\Progetti\\a-weak-Silly-substitution-Calculus\\SSC\\Theorems\\WeakNormalImpliesNormal.lean -o C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Theorems\\WeakNormalImpliesNormal.olean -i C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Theorems\\WeakNormalImpliesNormal.ilean -c C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Theorems\\WeakNormalImpliesNormal.c --setup C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Theorems\\WeakNormalImpliesNormal.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["SSC.Theorems.WeakNormalImpliesNormal:deps",
+   [["deps",
+     [["lean_ssc/SSC:extraDep", [["@lean_ssc:extraDep", "00000000000006bb"]]],
+      ["imports", "00000000000006bb"]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.29.1, commit f72c35b3f637c8c6571d353742168ab66cc22c00",
+   "fa77a35a41db35c0"],
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\SSC\\Theorems\\WeakNormalImpliesNormal.lean",
+   "21c42906adea99f5"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: SSC.Theorems.WeakNormalImpliesNormal", "7a4dda842b0cd9c2"],
+  ["Package.id?: (some lean_ssc)", "17c70cb315a52c3a"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "63d97f4154ca51be"}
