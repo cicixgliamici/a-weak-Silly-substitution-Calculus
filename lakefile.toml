@@ -1,0 +1,10 @@
+name = "lean_ssc"
+version = "0.1.0"
+defaultTargets = ["LeanSsc"]
+
+[[lean_lib]]
+name = "SSC"
+
+[[lean_exe]]
+name = "LeanSsc"
+root = "Main"
