@@ -1,0 +1,30 @@
+# Lake / Lean build outputs
+.lake/
+build/
+.lean/
+lake-packages/
+
+# Generated binaries and traces
+*.olean
+*.ilean
+*.c
+*.trace
+*.hash
+*.rsp
+*.exe
+*.obj
+*.lib
+*.dll
+*.so
+*.dylib
+
+# Editor / OS noise
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
