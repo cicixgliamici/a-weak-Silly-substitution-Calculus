@@ -1,0 +1,15 @@
+{"plugins": [],
+ "package": "lean_ssc",
+ "options": {},
+ "name": "SSC.Examples",
+ "isModule": false,
+ "importArts":
+ {"SSC.Syntax":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Syntax.olean"],
+  "SSC.Reduction":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Reduction.olean"],
+  "SSC.Decompose":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Decompose.olean"],
+  "SSC.Contexts":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Contexts.olean"]},
+ "dynlibs": []}

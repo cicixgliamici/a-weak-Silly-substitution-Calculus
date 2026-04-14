@@ -1,9 +1,9 @@
 {"synthetic": false,
  "schemaVersion": "2025-09-10",
  "outputs":
- {"o": ["f76543d201b9183d.olean"],
-  "i": "7a45558622090d0e.ilean",
-  "c": "a69b39320a774711.c"},
+ {"o": ["ae16a41a01ce22b6.olean"],
+  "i": "895becaa4f6bac7d.ilean",
+  "c": "8267ade2050b49cc.c"},
  "log":
  [{"message":
    ".> LEAN_PATH=C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1\\bin\\lean.exe C:\\Progetti\\a-weak-Silly-substitution-Calculus\\SSC\\Syntax.lean -o C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Syntax.olean -i C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Syntax.ilean -c C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Syntax.c --setup C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Syntax.setup.json --json",
@@ -21,10 +21,10 @@
   ["Lean 4.29.1, commit f72c35b3f637c8c6571d353742168ab66cc22c00",
    "fa77a35a41db35c0"],
   ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\SSC\\Syntax.lean",
-   "6759bbf541c65866"],
+   "eaafe1cefa0e8be8"],
   ["options", "00000000000006bb"],
   ["isModule: false", "feefd2a0d3a1847e"],
   ["Module.name: SSC.Syntax", "596cedd453ae12fa"],
   ["Package.id?: (some lean_ssc)", "17c70cb315a52c3a"],
   ["Module.leanArgs: #[]", "00000000000006bb"]],
- "depHash": "0d5ea5e251ee13bc"}
+ "depHash": "5618ae7ebe032c85"}

@@ -1,0 +1,32 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["bd7ad808ff46fa9f.olean"],
+  "i": "cfdae6ff0364146d.ilean",
+  "c": "841e22f9645de0e3.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1\\bin\\lean.exe C:\\Progetti\\a-weak-Silly-substitution-Calculus\\SSC\\Decompose.lean -o C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Decompose.olean -i C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Decompose.ilean -c C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Decompose.c --setup C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Decompose.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["SSC.Decompose:deps",
+   [["deps",
+     [["lean_ssc/SSC:extraDep", [["@lean_ssc:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["SSC.Contexts transitive imports (legacy)", "958f8a921ee85d37"],
+        ["SSC.Contexts:importAllArts", "34b0799dbfeaafa9"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.29.1, commit f72c35b3f637c8c6571d353742168ab66cc22c00",
+   "fa77a35a41db35c0"],
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\SSC\\Decompose.lean",
+   "fcf74ef76f312afa"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: SSC.Decompose", "eadf07957174226d"],
+  ["Package.id?: (some lean_ssc)", "17c70cb315a52c3a"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "c5f9ec13d17fa59a"}

@@ -35,8 +35,10 @@ def exCtx : Term :=
   Term.app exM (Term.var 99)
 
 example : exCtx ⟶ Term.app (Term.es (Term.var 0) 0 (Term.var 7)) (Term.var 99) := by
+  change plugW (WCtx.appL WCtx.hole (Term.var 99)) exM ⟶
+    plugW (WCtx.appL WCtx.hole (Term.var 99)) (Term.es (Term.var 0) 0 (Term.var 7))
   apply Step.ctx
-  simpa [plugW] using
+  simpa [exM, plugW, plugS] using
     (RootStep.m (S := SCtx.hole) (x := 0) (t := Term.var 0) (u := Term.var 7))
 
 end SSC

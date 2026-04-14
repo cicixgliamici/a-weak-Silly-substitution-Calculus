@@ -1,0 +1,18 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs": "3e1661e7ac16f087.o",
+ "log":
+ [{"message":
+   ".> c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1\\bin\\clang.exe -c -o C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Examples.c.o.noexport C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Examples.c -I c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1\\include -fstack-clash-protection -fdata-sections -ffunction-sections -Wno-unused-command-line-argument --sysroot c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1 -nostdinc -isystem c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1/include/clang -O3 -DNDEBUG",
+   "level": "trace"}],
+ "inputs":
+ [["SSC.Examples:c",
+   [["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Examples.c",
+     "f8532f5be112885c"],
+    ["Lean 4.29.1, commit f72c35b3f637c8c6571d353742168ab66cc22c00",
+     "fa77a35a41db35c0"]]],
+  ["Lean 4.29.1, commit f72c35b3f637c8c6571d353742168ab66cc22c00",
+   "fa77a35a41db35c0"],
+  ["traceArgs: #[-O3, -DNDEBUG]", "6c7bb0eeabd8f74a"],
+  ["x86_64-w64-windows-gnu", "360db333d006d911"]],
+ "depHash": "fe4c80e167682c1c"}

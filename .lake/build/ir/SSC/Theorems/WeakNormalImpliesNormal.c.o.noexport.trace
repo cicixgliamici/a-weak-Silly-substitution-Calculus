@@ -1,6 +1,6 @@
 {"synthetic": false,
  "schemaVersion": "2025-09-10",
- "outputs": "9c87dfd7afcc13c6.o",
+ "outputs": "cf87c59caaa99ae6.o",
  "log":
  [{"message":
    ".> c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1\\bin\\clang.exe -c -o C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Theorems\\WeakNormalImpliesNormal.c.o.noexport C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Theorems\\WeakNormalImpliesNormal.c -I c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1\\include -fstack-clash-protection -fdata-sections -ffunction-sections -Wno-unused-command-line-argument --sysroot c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1 -nostdinc -isystem c:\\Users\\darkl\\.elan\\toolchains\\leanprover--lean4---v4.29.1/include/clang -O3 -DNDEBUG",
@@ -8,11 +8,11 @@
  "inputs":
  [["SSC.Theorems.WeakNormalImpliesNormal:c",
    [["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\ir\\SSC\\Theorems\\WeakNormalImpliesNormal.c",
-     "6b071242a60c7303"],
+     "925c3219a1b78ff1"],
     ["Lean 4.29.1, commit f72c35b3f637c8c6571d353742168ab66cc22c00",
      "fa77a35a41db35c0"]]],
   ["Lean 4.29.1, commit f72c35b3f637c8c6571d353742168ab66cc22c00",
    "fa77a35a41db35c0"],
   ["traceArgs: #[-O3, -DNDEBUG]", "6c7bb0eeabd8f74a"],
   ["x86_64-w64-windows-gnu", "360db333d006d911"]],
- "depHash": "abe698f6748bc189"}
+ "depHash": "e026391857e4cb22"}

@@ -8,6 +8,8 @@ inductive WeakAnswer : Term → Prop where
   | lam :
       WeakAnswer (Term.lam x t)
 
+mutual
+
 inductive Inert : Term → Prop where
   | var :
       Inert (Term.var x)
@@ -25,6 +27,8 @@ inductive WeakNormalLike : Term → Prop where
   | inert :
       Inert i →
       WeakNormalLike i
+
+end
 
 theorem weakAnswer_to_wnl {t : Term} (h : WeakAnswer t) : WeakNormalLike t :=
   WeakNormalLike.answer h

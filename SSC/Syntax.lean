@@ -29,7 +29,7 @@ def shfv : Term → List Nat
   | var x     => [x]
   | lam _ _   => []
   | app t u   => shfv t ++ shfv u
-  | es t x u  => (shfv t).erase x ++ fv u
+  | es t x u  => (shfv t).erase x ++ shfv u
 
 def Closed (t : Term) : Prop :=
   fv t = []

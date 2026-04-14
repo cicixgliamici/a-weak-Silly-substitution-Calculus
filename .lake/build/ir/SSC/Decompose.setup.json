@@ -1,0 +1,11 @@
+{"plugins": [],
+ "package": "lean_ssc",
+ "options": {},
+ "name": "SSC.Decompose",
+ "isModule": false,
+ "importArts":
+ {"SSC.Syntax":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Syntax.olean"],
+  "SSC.Contexts":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Contexts.olean"]},
+ "dynlibs": []}

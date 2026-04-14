@@ -3,5 +3,15 @@
  "options": {},
  "name": "SSC.Theorems.WeakNormalImpliesNormal",
  "isModule": false,
- "importArts": {},
+ "importArts":
+ {"SSC.Syntax":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Syntax.olean"],
+  "SSC.Reduction":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Reduction.olean"],
+  "SSC.NormalForms":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\NormalForms.olean"],
+  "SSC.Decompose":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Decompose.olean"],
+  "SSC.Contexts":
+  ["C:\\Progetti\\a-weak-Silly-substitution-Calculus\\.lake\\build\\lib\\lean\\SSC\\Contexts.olean"]},
  "dynlibs": []}

@@ -1064,7 +1064,7 @@ x_15 = lean_obj_once(&lp_lean__ssc_SSC_fv___closed__0, &lp_lean__ssc_SSC_fv___cl
 lean_inc(x_14);
 x_16 = lp_lean__ssc___private_Init_Data_List_Impl_0__List_eraseTR_go___at___00SSC_fv_spec__0(x_14, x_12, x_14, x_15);
 lean_dec(x_14);
-x_17 = lp_lean__ssc_SSC_fv(x_13);
+x_17 = lp_lean__ssc_SSC_shfv(x_13);
 x_18 = l_List_appendTR___redArg(x_16, x_17);
 return x_18;
 }
