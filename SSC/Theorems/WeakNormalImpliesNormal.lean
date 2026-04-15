@@ -4,17 +4,15 @@ namespace SSC
 
 open Term
 
-/-
-  These are the first easy normal-form facts.
+theorem var_normal (x : Nat) : NormalForm (Term.var x) := by
+  intro h
+  rcases h with ⟨u, C, r, s, hroot, hs, ht⟩
+  cases C <;> simp [plugW] at hs
 
-  They compile cleanly and give us a stable theorem layer.
-  Stronger results for inert and weak-normal-like terms will be added
-  after refining the reduction/decomposition interface.
--/
-
-axiom var_normal (x : Nat) : NormalForm (Term.var x)
-
-axiom lam_normal (x : Nat) (t : Term) : NormalForm (Term.lam x t)
+theorem lam_normal (x : Nat) (t : Term) : NormalForm (Term.lam x t) := by
+  intro h
+  rcases h with ⟨u, C, r, s, hroot, hs, ht⟩
+  cases C <;> simp [plugW] at hs
 
 theorem weakAnswer_normal {t : Term} (h : WeakAnswer t) : NormalForm t := by
   cases h with
@@ -22,10 +20,8 @@ theorem weakAnswer_normal {t : Term} (h : WeakAnswer t) : NormalForm t := by
       exact lam_normal _ _
 
 /-
-  Placeholders for the next phase.
-
-  These will later be replaced by actual proofs once we add
-  inversion lemmas for contexts and reduction shapes.
+  Still postponed for the next step.
+  These require induction over the mutual grammar plus a few shape lemmas.
 -/
 axiom inert_normal {t : Term} : Inert t → NormalForm t
 
