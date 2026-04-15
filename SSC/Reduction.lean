@@ -20,10 +20,12 @@ inductive RootStep : Term → Term → Prop where
       x ∉ fv t →
       RootStep (Term.es t x v) t
 
-inductive Step : Term → Term → Prop where
-  | ctx :
-      RootStep t u →
-      Step (plugW C t) (plugW C u)
+/--
+Weak reduction as existential contextual closure of root reduction.
+This formulation is easier to reason about for first normal-form proofs.
+-/
+def Step (s t : Term) : Prop :=
+  ∃ C r u, RootStep r u ∧ s = plugW C r ∧ t = plugW C u
 
 notation:50 t " ⟶root " u => RootStep t u
 notation:50 t " ⟶ " u => Step t u
@@ -32,7 +34,9 @@ def NormalForm (t : Term) : Prop :=
   ¬ ∃ u, Step t u
 
 theorem root_implies_step {t u : Term} (h : RootStep t u) : Step t u := by
-  simpa [plugW] using Step.ctx (C := WCtx.hole) h
+  refine ⟨WCtx.hole, t, u, h, ?_, ?_⟩
+  · simp [plugW]
+  · simp [plugW]
 
 theorem step_m_top (x : Nat) (t u : Term) :
     Term.app (Term.lam x t) u ⟶ Term.es t x u := by
