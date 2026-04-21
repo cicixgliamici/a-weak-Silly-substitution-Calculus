@@ -3,6 +3,7 @@
 build/
 .lean/
 lake-packages/
+lean-toolchain
 
 # Generated binaries and traces
 *.olean
