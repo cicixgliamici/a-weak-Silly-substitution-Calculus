@@ -98,3 +98,77 @@ This repository is best read as a compact theory-oriented project at the interse
 - and programming-language foundations.
 
 ---
+
+## Minimal formal core
+
+The repository can be made immediately more concrete by adding a compact formal core.
+
+### Informal term grammar
+
+A minimal syntax for terms could be presented as:
+
+```text
+t ::= x
+    | λx.t
+    | t t
+    | t[x := t]
+````
+
+where:
+
+* `x` ranges over variables
+* `λx.t` is abstraction
+* `t t` is application
+* `t[x := u]` is an explicit substitution form
+
+This is intentionally small: the goal is to make substitution part of the syntax rather than treating it only as a meta-operation.
+
+---
+
+## Intuition
+
+The key idea is that substitution is represented explicitly inside terms.
+
+Instead of saying only at the meta-level that substitution happens “outside” the calculus, the system can expose it as a first-class syntactic object. This makes it easier to reason about:
+
+* how substitution propagates,
+* when it is delayed,
+* how it interacts with variables and binders,
+* and what operational rules are needed to reduce terms.
+
+---
+
+## Example reduction intuition
+
+A standard motivating example is beta-reduction with explicit substitution:
+
+```text
+(λx.t) u  →  t[x := u]
+```
+
+Rather than performing substitution immediately as an external meta-step, the calculus records it explicitly.
+
+From there, additional rules can describe how substitutions propagate through syntax.
+
+For example, one may want rules of the following informal shape:
+
+```text
+x[x := u]       → u
+y[x := u]       → y          if y ≠ x
+(t1 t2)[x := u] → (t1[x := u]) (t2[x := u])
+```
+
+These examples are only illustrative, but they make the repository much easier to read because they show what kind of computational behavior the calculus is meant to capture.
+
+---
+
+## Why explicit substitution matters
+
+Making substitution explicit is interesting because it helps connect:
+
+* lambda-calculus style reduction
+* implementation-oriented views of evaluation
+* rewriting systems
+* proof-theoretic and structural accounts of computation
+
+This is one of the reasons calculi of explicit substitution are useful both in theory and in language implementation discussions.
