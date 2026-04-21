@@ -29,3 +29,12 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Downloaded paper source in docs
+docs/paper.tar.gz
+docs/*.tex
+docs/*.bib
+docs/*.bbl
+docs/*.cls
+docs/macros/
+docs/00README.json

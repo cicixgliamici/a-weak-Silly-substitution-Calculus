@@ -1,4 +1,5 @@
 import SSC.Reduction
+import SSC.Strategy
 
 namespace SSC
 
@@ -93,5 +94,35 @@ example : exCtx ⟶ Term.app (Term.es (Term.var 0) 0 (Term.var 7)) (Term.var 99)
       (RootStep.m (S := SCtx.hole) (x := 0) (t := Term.var 0) (u := Term.var 7))
   · simp [exCtx, exM, plugW]
   · simp [plugW]
+
+/--
+Omega combinator. Diverges under generic weak reduction.
+-/
+def deltaTerm : Term := Term.lam 0 (Term.app (Term.var 0) (Term.var 0))
+def omegaTerm : Term := Term.app deltaTerm deltaTerm
+
+/--
+The paper's specific example for silly evaluation (Example 7.1).
+`t := (λy.λx.x(λw.x)) Ω (I I)`
+In CbS, this term triggers silly duplications and evaluates divergently,
+while in CbN it would terminate and erase `Ω`.
+-/
+def sillyExTerm : Term :=
+  let f := Term.lam 1 (Term.lam 0 (Term.app (Term.var 0) (Term.lam 2 (Term.var 0))))
+  let arg1 := omegaTerm
+  let arg2 := Term.app idTerm idTerm
+  Term.app (Term.app f arg1) arg2
+
+/--
+Sanity check: `sillyExTerm` first evaluates via a multiplicative step under CbS.
+This is because `YStep` multiplicative rules allow reduction in `YCtx`,
+and the empty context is a valid `YCtx`.
+-/
+example : sillyExTerm ⟶y
+  plugY (YCtx.mk ACtx.hole (NCtx.appL NCtx.hole (Term.app idTerm idTerm)))
+    (Term.es (Term.lam 0 (Term.app (Term.var 0) (Term.lam 2 (Term.var 0)))) 1 omegaTerm) := by
+  -- This step proves that the first step is indeed multiplicative, substituting Ω for y.
+  apply YStep.y_m (Y := YCtx.mk ACtx.hole (NCtx.appL NCtx.hole (Term.app idTerm idTerm)))
+                  (S := SCtx.hole)
 
 end SSC
