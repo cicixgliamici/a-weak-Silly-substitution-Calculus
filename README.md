@@ -99,6 +99,21 @@ This repository is best read as a compact theory-oriented project at the interse
 
 ---
 
+## Repository Structure
+
+To help reviewers and contributors navigate the mechanization, here is a map of the Lean 4 source files:
+
+* `SSC.lean` / `Main.lean`: Entry points for the library and the executable.
+* **`SSC/Syntax.lean`**: Defines the AST of the calculus (`Term`), values, and free variable calculation (`fv`, `shfv`).
+* **`SSC/Contexts.lean`**: Defines Weak Contexts (`WCtx`) and Substitution Contexts (`SCtx`) and their plugging operations.
+* **`SSC/Reduction.lean`**: Defines the root reduction rules (`RootStep`) and the weak contextual closure (`Step` or `⟶`).
+* **`SSC/Strategy.lean`**: Defines Call-by-Silly contexts (`YCtx`) and its strict reduction strategy (`YStep` or `⟶y`).
+* **`SSC/NormalForms.lean`**: Defines the inductive grammar for normal forms (`Inert`, `WeakNormalLike`, `WeakAnswer`).
+* **`SSC/Theorems/`**: Contains formal, mechanically-verified proofs. For example, `WeakNormalImpliesNormal.lean` proves that inert terms cannot reduce.
+* **`SSC/Tests/`**: A compile-time verified test suite for syntax, contexts, and reduction examples. Evaluated automatically on `lake build`.
+
+---
+
 ## Minimal formal core
 
 The repository can be made immediately more concrete by adding a compact formal core.

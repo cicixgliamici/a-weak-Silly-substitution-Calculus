@@ -1,3 +1,12 @@
+/-!
+# Abstract Syntax Tree of the Weak Silly Substitution Calculus
+
+This module defines the core syntax of the calculus, representing terms with explicit
+substitutions as first-class citizens. It also provides the fundamental definitions
+for Values, and structural properties like Free Variables (`fv`) and Shallow Free
+Variables (`shfv`).
+-/
+
 namespace SSC
 
 /--

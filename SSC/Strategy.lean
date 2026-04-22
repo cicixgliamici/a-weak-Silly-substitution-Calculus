@@ -1,5 +1,14 @@
 import SSC.Reduction
 
+/-!
+# Call-by-Silly Strategy (CbS)
+
+This module formalizes the Call-by-Silly evaluation strategy as described in the
+literature. It introduces specific evaluation contexts (`NCtx`, `ACtx`, `YCtx`)
+and restricts the generic weak reduction to a deterministic evaluation strategy
+called `YStep` (`⟶y`).
+-/
+
 namespace SSC
 
 open Term

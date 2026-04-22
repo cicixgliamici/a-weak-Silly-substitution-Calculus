@@ -1,5 +1,17 @@
 import SSC.Syntax
 
+/-!
+# Weak and Substitution Contexts
+
+This module defines the various evaluation contexts used to propagate reduction.
+In explicit substitution calculi, context definitions are critical to control
+precisely where evaluation is allowed to happen.
+
+We define:
+- `WCtx`: Weak evaluation contexts (disallowing reduction inside lambda abstractions).
+- `SCtx`: Substitution contexts (lists of explicit substitutions).
+-/
+
 namespace SSC
 
 open Term

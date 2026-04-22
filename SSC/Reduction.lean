@@ -1,5 +1,14 @@
 import SSC.Decompose
 
+/-!
+# Weak Reduction Semantics
+
+This module defines the operational semantics for the weak substitution calculus.
+The semantics are split into two layers:
+1. `RootStep`: The core computational steps (Multiplicative, Exponential, and GCV).
+2. `Step` (`⟶`): The contextual closure of `RootStep` over weak evaluation contexts (`WCtx`).
+-/
+
 namespace SSC
 
 open Term
