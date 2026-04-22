@@ -91,7 +91,6 @@ It consists of four precise rules.
 inductive YStep : Term → Term → Prop where
   /-- Multiplicative step in a silly context. -/
   | y_m :
-      RootStep.m (S := S) (x := x) (t := t) (u := u) →
       YStep (plugY Y (Term.app (plugS S (Term.lam x t)) u))
             (plugY Y (plugS S (Term.es t x u)))
 

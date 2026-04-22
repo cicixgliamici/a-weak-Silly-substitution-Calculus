@@ -172,3 +172,18 @@ Making substitution explicit is interesting because it helps connect:
 * proof-theoretic and structural accounts of computation
 
 This is one of the reasons calculi of explicit substitution are useful both in theory and in language implementation discussions.
+
+---
+
+## Lean 4 & Lake: Quick Reference
+
+This project is built using [Lean 4](https://leanprover.github.io/) and its package manager, **Lake** (Lean Make). Lake is used to build the Lean project, manage dependencies, and execute binaries. 
+
+Here are the main commands you'll need to run and interact with the code:
+
+* `lake build`: Compiles the entire project and its dependencies. This is typically the first command you run after cloning the repository.
+* `lake exe LeanSsc`: Runs the main executable defined in the `lakefile.toml`.
+* `lake clean`: Removes build artifacts, providing a clean state for the next build.
+* `lake update`: Updates the dependencies specified in the `lake-manifest.json` to their latest versions.
+
+To use the Lean 4 interactive theorem proving features (like checking types or proofs), open any `.lean` file in an editor with the Lean 4 extension installed (such as VS Code). The Lean language server will automatically start checking the file.

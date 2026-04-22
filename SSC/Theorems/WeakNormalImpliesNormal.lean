@@ -8,11 +8,15 @@ theorem var_normal (x : Nat) : NormalForm (Term.var x) := by
   intro h
   rcases h with ⟨u, C, r, s, hroot, hs, ht⟩
   cases C <;> simp [plugW] at hs
+  · cases hs
+    cases hroot
 
 theorem lam_normal (x : Nat) (t : Term) : NormalForm (Term.lam x t) := by
   intro h
   rcases h with ⟨u, C, r, s, hroot, hs, ht⟩
   cases C <;> simp [plugW] at hs
+  · cases hs
+    cases hroot
 
 theorem weakAnswer_normal {t : Term} (h : WeakAnswer t) : NormalForm t := by
   cases h with
