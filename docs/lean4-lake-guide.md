@@ -72,11 +72,19 @@ A typical Lean project structured by Lake looks like this:
 * `lean-toolchain`: Specifies the exact version of the Lean compiler used by the project.
 * `Main.lean`: The entry point for the executable.
 * `SSC/`: The directory containing the actual library code, modules, and theorems.
-* `docs/`: Theoretical documentation and guides (like this one!).
+* `docs/`: Theoretical documentation, the source paper, and project guides.
+
+For the actual module graph, rather than this generic Lake layout, see
+[`architecture.md`](./architecture.md). For the exact verified boundary of the calculus,
+see [`paper-implementation.md`](./paper-implementation.md).
 
 ## Summary for Reviewers
 
 By utilizing **Lean 4** and **Lake**, this project embraces modern, rigorous methods for formalizing computer science theory. The toolchain ensures that:
-- Code and proofs are completely reproducible.
-- Dependencies are strictly pinned.
-- The theoretical calculus is not just described on paper, but mechanically verified by a trusted kernel.
+
+- the checked modules can be rebuilt with the pinned Lean release;
+- the project currently has no external Lean package dependency;
+- every theorem that is present in the library is verified by the Lean kernel.
+
+This verification applies to the formal statements currently encoded. It does not by
+itself imply that the complete paper has been implemented.

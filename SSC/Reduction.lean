@@ -1,132 +1,168 @@
 import SSC.Decompose
 
 /-!
-# Weak Reduction Semantics
+# Paper-Faithful Weak Reduction Rules
 
-This module defines the operational semantics for the weak substitution calculus.
-The semantics are split into two layers:
-1. `RootStep`: The core computational steps (Multiplicative, Exponential, and GCV).
-2. `Step` (`⟶`): The contextual closure of `RootStep` over weak evaluation contexts (`WCtx`).
+The weak SSC has three independent root relations. Each relation is closed under weak
+contexts, yielding labelled weak steps. Their union is the generic weak step `Step`.
+
+## Definition ladder
+
+```text
+MRootStep / ERootStep / GCVRootStep
+  -> RootStep
+  -> WeakClosure
+  -> MStep / EStep / GCVStep
+  -> Step
+  -> NormalForm
+```
+
+Keeping labels at both root and weak level is necessary for later postponement,
+commutation, and quantitative proofs.
 -/
 
 namespace SSC
 
 open Term
 
+/-- Multiplicative (explicit beta) reduction at a distance. -/
+inductive MRootStep : Term → Term → Prop where
+  | intro :
+      MRootStep
+        (Term.app (plugS S (Term.lam x body)) argument)
+        (plugS S (Term.es body x argument))
+
+/-- Exponential reduction replaces one occurrence selected by a weak context. -/
+inductive ERootStep : Term → Term → Prop where
+  | intro :
+      ERootStep
+        (Term.es (plugW C (Term.var x)) x replacement)
+        (Term.es (plugW C replacement) x replacement)
+
 /--
-`RootStep` is the relation of **root reduction steps**.
+Garbage collection by value, including the substitution context around the value.
 
-These are the primitive reduction rules of the current prototype.
-
-The three constructors model:
-
-- `m`   : a multiplicative-style step
-- `e`   : an exponential-style step
-- `gcv` : garbage collection by value
-
-This file currently provides a simplified operational core.
-It is structurally inspired by the intended calculus, but it is not yet
-the full paper-level metatheory.
+The context is preserved on the target because its substitutions may contain computations
+that cannot be erased together with the value.
 -/
+inductive GCVRootStep : Term → Term → Prop where
+  | intro :
+      IsValue value →
+      x ∉ fv body →
+      GCVRootStep
+        (Term.es body x (plugS S value))
+        (plugS S body)
+
+/-- Tagged union of the three primitive root relations. -/
 inductive RootStep : Term → Term → Prop where
-  /--
-  Multiplicative-style rule.
+  | m : MRootStep source target → RootStep source target
+  | e : ERootStep source target → RootStep source target
+  | gcv : GCVRootStep source target → RootStep source target
 
-  Informally, this says that if a lambda abstraction appears inside a
-  substitution context and is then applied to an argument, we can turn
-  that application into an explicit substitution.
-  -/
-  | m :
-      RootStep
-        (Term.app (plugS S (Term.lam x t)) u)
-        (plugS S (Term.es t x u))
+/-- Contextual closure of a relation under weak contexts. -/
+def WeakClosure (relation : Term → Term → Prop) (source target : Term) : Prop :=
+  ∃ C redex contractum,
+    relation redex contractum ∧
+    source = plugW C redex ∧
+    target = plugW C contractum
 
-  /--
-  Exponential-style rule.
+/-- Weak multiplicative steps. -/
+abbrev MStep := WeakClosure MRootStep
 
-  Informally, this captures one step of replacing an occurrence of a
-  variable inside a weak context with the term carried by the explicit
-  substitution.
-  -/
-  | e :
-      RootStep
-        (Term.es (plugW C (Term.var x)) x u)
-        (Term.es (plugW C u) x u)
+/-- Weak exponential steps. -/
+abbrev EStep := WeakClosure ERootStep
 
-  /--
-  Garbage collection by value.
+/-- Weak garbage-collection-by-value steps. -/
+abbrev GCVStep := WeakClosure GCVRootStep
 
-  If the substituted term is a value and the bound variable does not occur
-  free in the target term, then the explicit substitution can be erased.
-  -/
-  | gcv :
-      IsValue v →
-      x ∉ fv t →
-      RootStep (Term.es t x v) t
+/-- Generic weak reduction, containing all three labelled weak relations. -/
+abbrev Step := WeakClosure RootStep
 
-/--
-`Step s t` is weak reduction from `s` to `t`.
+/-- The non-erasing fragment consists of multiplicative or exponential weak steps. -/
+def NonErasingStep (source target : Term) : Prop :=
+  MStep source target ∨ EStep source target
 
-We define weak reduction as an **existential contextual closure**
-of `RootStep` under weak contexts.
+notation:50 source " ⟶mroot " target => MRootStep source target
+notation:50 source " ⟶eroot " target => ERootStep source target
+notation:50 source " ⟶gcvroot " target => GCVRootStep source target
+notation:50 source " ⟶root " target => RootStep source target
+notation:50 source " ⟶m " target => MStep source target
+notation:50 source " ⟶e " target => EStep source target
+notation:50 source " ⟶gcv " target => GCVStep source target
+notation:50 source " ⟶ " target => Step source target
 
-So `s ⟶ t` means:
-there exists a weak context `C` and a root step `r ⟶root u`
-such that:
+/-- A term is in normal form when it has no outgoing generic weak step. -/
+def NormalForm (term : Term) : Prop :=
+  ¬ ∃ target, Step term target
 
-- `s = plugW C r`
-- `t = plugW C u`
+/-- Any root step induces a weak step through the empty weak context. -/
+theorem root_implies_step {source target : Term} (h : RootStep source target) :
+    Step source target := by
+  exact ⟨WCtx.hole, source, target, h, by simp [plugW], by simp [plugW]⟩
 
-This formulation is convenient for early reasoning and small proofs.
--/
-def Step (s t : Term) : Prop :=
-  ∃ C r u, RootStep r u ∧ s = plugW C r ∧ t = plugW C u
+/-- Every labelled multiplicative step is a generic weak step. -/
+theorem mStep_implies_step {source target : Term} (h : MStep source target) :
+    Step source target := by
+  rcases h with ⟨C, redex, contractum, hroot, hs, ht⟩
+  exact ⟨C, redex, contractum, RootStep.m hroot, hs, ht⟩
 
-notation:50 t " ⟶root " u => RootStep t u
-notation:50 t " ⟶ " u => Step t u
+/-- Every labelled exponential step is a generic weak step. -/
+theorem eStep_implies_step {source target : Term} (h : EStep source target) :
+    Step source target := by
+  rcases h with ⟨C, redex, contractum, hroot, hs, ht⟩
+  exact ⟨C, redex, contractum, RootStep.e hroot, hs, ht⟩
 
-/--
-A term is in normal form when it has no outgoing weak reduction step.
--/
-def NormalForm (t : Term) : Prop :=
-  ¬ ∃ u, Step t u
+/-- Every labelled value-GC step is a generic weak step. -/
+theorem gcvStep_implies_step {source target : Term} (h : GCVStep source target) :
+    Step source target := by
+  rcases h with ⟨C, redex, contractum, hroot, hs, ht⟩
+  exact ⟨C, redex, contractum, RootStep.gcv hroot, hs, ht⟩
 
-/--
-Any root step induces a weak step by taking the empty weak context.
--/
-theorem root_implies_step {t u : Term} (h : RootStep t u) : Step t u := by
-  refine ⟨WCtx.hole, t, u, h, ?_, ?_⟩
-  · simp [plugW]
-  · simp [plugW]
+/-- Generic weak reduction is exactly the union of its three labelled components. -/
+theorem step_iff_labelled {source target : Term} :
+    Step source target ↔
+      MStep source target ∨ EStep source target ∨ GCVStep source target := by
+  constructor
+  · intro h
+    rcases h with ⟨C, redex, contractum, hroot, hs, ht⟩
+    cases hroot with
+    | m hm => exact Or.inl ⟨C, redex, contractum, hm, hs, ht⟩
+    | e he => exact Or.inr (Or.inl ⟨C, redex, contractum, he, hs, ht⟩)
+    | gcv hgcv => exact Or.inr (Or.inr ⟨C, redex, contractum, hgcv, hs, ht⟩)
+  · intro h
+    rcases h with hm | he | hgcv
+    · exact mStep_implies_step hm
+    · exact eStep_implies_step he
+    · exact gcvStep_implies_step hgcv
 
-/--
-A top-level multiplicative reduction step.
-
-This is the most direct instance of the `m` rule, where the substitution
-context is empty.
--/
-theorem step_m_top (x : Nat) (t u : Term) :
-    Term.app (Term.lam x t) u ⟶ Term.es t x u := by
+/-- Top-level multiplicative reduction with an empty substitution context. -/
+theorem step_m_top (x : Nat) (body argument : Term) :
+    Term.app (Term.lam x body) argument ⟶ Term.es body x argument := by
   apply root_implies_step
-  simpa [plugS] using (RootStep.m (S := SCtx.hole) (x := x) (t := t) (u := u))
+  apply RootStep.m
+  simpa [plugS] using
+    (MRootStep.intro (S := SCtx.hole) (x := x) (body := body) (argument := argument))
 
-/--
-A top-level exponential reduction step.
-
-This is the most direct instance of the `e` rule, where the weak context
-is empty.
--/
-theorem step_e_top (x : Nat) (u : Term) :
-    Term.es (Term.var x) x u ⟶ Term.es u x u := by
+/-- Top-level exponential replacement with an empty occurrence context. -/
+theorem step_e_top (x : Nat) (replacement : Term) :
+    Term.es (Term.var x) x replacement ⟶ Term.es replacement x replacement := by
   apply root_implies_step
-  simpa [plugW] using (RootStep.e (C := WCtx.hole) (x := x) (u := u))
+  apply RootStep.e
+  simpa [plugW] using
+    (ERootStep.intro (C := WCtx.hole) (x := x) (replacement := replacement))
 
-/--
-A convenient specialization of the top-level exponential step,
-written with the explicit-substitution notation.
--/
-theorem step_e_var_top (x : Nat) (u : Term) :
-    Term.es (Term.var x) x u ⟶ u[x↦u] := by
-  simpa using step_e_top x u
+/-- Convenient notation-oriented specialization of `step_e_top`. -/
+theorem step_e_var_top (x : Nat) (replacement : Term) :
+    Term.es (Term.var x) x replacement ⟶ replacement[x ↦ replacement] := by
+  simpa using step_e_top x replacement
+
+/-- Top-level value garbage collection with an empty substitution context. -/
+theorem step_gcv_top {body value : Term} {x : Nat}
+    (isValue : IsValue value) (unused : x ∉ fv body) :
+    Term.es body x value ⟶ body := by
+  apply root_implies_step
+  apply RootStep.gcv
+  simpa [plugS] using
+    (GCVRootStep.intro (S := SCtx.hole) isValue unused)
 
 end SSC

@@ -105,8 +105,7 @@ example : exE ⟶ Term.es (Term.var 9) 3 (Term.var 9) := by
   exact step_e_top 3 (Term.var 9)
 
 example : exGC ⟶ Term.var 4 := by
-  apply root_implies_step
-  apply RootStep.gcv
+  apply step_gcv_top
   · trivial
   · simp [fv]
 

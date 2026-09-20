@@ -1,122 +1,110 @@
-# Example Reduction — A Weak Silly Substitution Calculus
+# Checked Reduction Examples
 
-This document gives a few compact reduction traces illustrating the intuition behind explicit substitution.
+These examples follow the Lean relations currently defined in `SSC.Reduction`. In
+particular, an exponential step replaces one occurrence and retains the explicit
+substitution.
 
-The examples are deliberately small: their purpose is to make the repository easier to inspect and reason about.
-
----
-
-## Example 1 — Identity-like behavior
-
-Start with:
+Let
 
 ```text
-(λx.x) y
-````
-
-### Step 1 — beta step with explicit substitution
-
-```text
-(λx.x) y  →  x[x := y]
+I := λ1.1
 ```
 
-Instead of immediately replacing `x` by `y` as a meta-operation, the calculus records substitution explicitly.
+## Identity applied to a value
 
-### Step 2 — variable hit
-
-```text
-x[x := y]  →  y
-```
-
-So the full trace is:
+Starting from
 
 ```text
-(λx.x) y  →  x[x := y]  →  y
+(λ0.0) I
 ```
 
----
-
-## Example 2 — Application structure
-
-Start with:
+the multiplicative rule gives
 
 ```text
-(λx. x z) u
+(λ0.0) I  ->m  0[0 <- I].
 ```
 
-### Step 1 — beta step with explicit substitution
+The exponential rule replaces the selected occurrence but retains the substitution:
 
 ```text
-(λx. x z) u  →  (x z)[x := u]
+0[0 <- I]  ->e  I[0 <- I].
 ```
 
-### Step 2 — propagate through application
+Since `I` is a value and `0` is not free in `I`, value garbage collection applies:
 
 ```text
-(x z)[x := u]  →  (x[x := u]) (z[x := u])
+I[0 <- I]  ->gcv  I.
 ```
 
-### Step 3 — resolve variable hit and miss
+Thus the checked shape of the complete trace is
 
 ```text
-x[x := u]  →  u
-z[x := u]  →  z
+(λ0.0) I  ->  0[0 <- I]  ->  I[0 <- I]  ->  I.
 ```
 
-So the full trace is:
+## Linear replacement inside an application
+
+Consider
 
 ```text
-(λx. x z) u
-→ (x z)[x := u]
-→ (x[x := u]) (z[x := u])
-→ u z
+(0 2)[0 <- I].
 ```
 
----
-
-## Example 3 — Why explicit substitution is useful
-
-Consider again:
+The exponential rule can select the occurrence of `0` using the weak context `<.> 2`:
 
 ```text
-(λx.t) u
+(0 2)[0 <- I]  ->e  (I 2)[0 <- I].
 ```
 
-In a standard presentation, one often writes directly:
+This is not a propagation rule that copies the substitution onto both children. It is a
+single-occurrence replacement, which is the relevant micro-step behavior.
+
+Garbage collection can then remove the residual substitution:
 
 ```text
-t{x := u}
+(I 2)[0 <- I]  ->gcv  I 2.
 ```
 
-as if substitution happened invisibly in one meta-level step.
+## Preserving a substitution context during garbage collection
 
-In an explicit substitution calculus, we instead write:
+Suppose the discarded value is surrounded by another explicit substitution:
 
 ```text
-(λx.t) u  →  t[x := u]
+2[0 <- I[4 <- 9]].
 ```
 
-This makes substitution itself part of the computational story.
+Here `S = <.>[4 <- 9]`. The paper-faithful value-GC rule moves this context to the
+surviving target instead of deleting it:
 
-That is useful because it allows us to reason more carefully about:
+```text
+2[0 <- S<I>]  ->gcv  S<2>
 
-* where substitution is located
-* how it propagates
-* which rules are needed
-* and what happens near binders
+2[0 <- I[4 <- 9]]  ->gcv  2[4 <- 9].
+```
 
----
+This trace is included as a compile-time regression test. Preserving `S` matters because
+its stored term need not be a value or terminating computation.
 
-## What these examples show
+## Why a variable argument behaves differently
 
-These traces illustrate three key ideas:
+With a free variable `7`, Lean checks
 
-* beta-reduction can expose substitution instead of hiding it
-* substitution can propagate structurally through terms
-* explicit substitution turns a meta-level concept into a first-class object of study
+```text
+(λ0.0) 7  ->m  0[0 <- 7]  ->e  7[0 <- 7].
+```
 
----
+The last substitution is not removed by the current `gcv` rule because variables are not
+values. This is intentional in the present semantics and is why documentation must not
+shorten this trace to `(λ0.0) 7 ->* 7`.
 
-## Next natural example to add
+## Capture avoidance at the meta-level
 
-A good future extension would be an example involving abstraction and variable-capture concerns, together with a note on why freshness conditions matter.
+Operational explicit substitutions are syntax and are reduced by the rules above. The
+separate Lean function `subst` performs capture-avoiding meta-substitution. For example,
+
+```text
+subst (λ1.0) 0 1 = λ2.1
+```
+
+The binder is renamed to fresh name `2` before replacement, preventing the inserted free
+`1` from becoming captured.

@@ -3,9 +3,13 @@ import SSC.Reduction
 /-!
 # Normal Forms and Inert Terms
 
-This module defines the syntactic structure of terms that can no longer be
-evaluated under weak reduction. It introduces the mutually inductive properties
-`Inert` and `WeakNormalLike`, as well as `WeakAnswer`.
+This module defines a sound but currently incomplete grammar of terms that cannot be
+evaluated under weak reduction. It introduces the mutually inductive properties `Inert`
+and `WeakNormalLike`, as well as `WeakAnswer`.
+
+The grammar currently covers variables, lambdas, and inert-headed applications. Adding
+the explicit-substitution cases and proving the converse characterization from Proposition
+4.2 is the next metatheoretic milestone after the paper-faithful Phase 2 semantics.
 -/
 
 namespace SSC

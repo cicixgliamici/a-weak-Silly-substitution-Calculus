@@ -8,6 +8,10 @@ This folder contains short educational notes on three major evaluation strategie
 
 These strategies are essential background for understanding the broader theoretical setting of this repository.
 
+The repository's fourth strategy, Call-by-Silly (CbS), is not presented here as a generic
+textbook strategy. Its definition is specific to the source paper and its current Lean
+status is documented in [`../paper-implementation.md`](../paper-implementation.md).
+
 ## Why evaluation strategy matters
 
 In the lambda calculus, the term
@@ -50,6 +54,8 @@ This repository is not only about Lean code.
 It is also meant to be understandable as a small educational and research-oriented project.
 
 For that reason, these notes explain the conceptual setting around the formalization.
+They do not specify the Lean reduction relations; for those, read
+[`../core-rules.md`](../core-rules.md).
 
 ## Files
 

@@ -68,8 +68,7 @@ Since the variable `0` does not occur free in `var 4`, the explicit
 substitution can be erased.
 -/
 example : exGC ⟶ Term.var 4 := by
-  apply root_implies_step
-  apply RootStep.gcv
+  apply step_gcv_top
   · trivial
   · simp [fv]
 
@@ -90,8 +89,10 @@ This illustrates weak contextual closure of root reduction.
 -/
 example : exCtx ⟶ Term.app (Term.es (Term.var 0) 0 (Term.var 7)) (Term.var 99) := by
   refine ⟨WCtx.appL WCtx.hole (Term.var 99), exM, Term.es (Term.var 0) 0 (Term.var 7), ?_, ?_, ?_⟩
-  · simpa [exM, plugS] using
-      (RootStep.m (S := SCtx.hole) (x := 0) (t := Term.var 0) (u := Term.var 7))
+  · apply RootStep.m
+    simpa [exM, plugS] using
+      (MRootStep.intro (S := SCtx.hole) (x := 0)
+        (body := Term.var 0) (argument := Term.var 7))
   · simp [exCtx, exM, plugW]
   · simp [plugW]
 
