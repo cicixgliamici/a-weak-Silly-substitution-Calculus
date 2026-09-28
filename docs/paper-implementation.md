@@ -33,8 +33,8 @@ proposition numbers refer to the paper version stored in `docs/`.
 | GC by value root rule | `SSC/Reduction.lean` | Implemented | Preserves the substitution context: `t[x <- S<v>] -> S<t>`. |
 | Labelled weak relations | `SSC/Reduction.lean` | Implemented | `MStep`, `EStep`, and `GCVStep`; their union is characterized by `step_iff_labelled`. |
 | Weak contextual closure | `SSC/Reduction.lean` | Implemented | Expressed uniformly through `WeakClosure` and `WCtx`. |
-| Weak normal-form grammar, Proposition 4.2 | `SSC/NormalForms.lean` | Partial | Explicit-substitution cases and side conditions are missing. |
-| Normal-form characterization | `SSC/Theorems/WeakNormalImpliesNormal.lean` | Partial | Only soundness of the smaller grammar is proved. |
+| Weak normal-form grammar, Proposition 4.2 | `SSC/NormalForms.lean` | Implemented | Includes both explicit-substitution families and their `fv`/`shfv` side conditions. |
+| Normal-form characterization | `SSC/Theorems/WeakNormalImpliesNormal.lean` | Implemented | Proves `NormalForm t ↔ WeakNormalLike t`. |
 | GC postponement, Lemma 4.3 / Proposition 4.4 | — | Missing | Requires the paper-faithful `gcv` rule first. |
 | Local termination, Proposition 4.5 | — | Missing | No transitive reduction framework is present yet. |
 | Local confluence and commutation, Lemmas 4.6–4.7 | — | Missing | Double contexts and deformation lemmas are absent. |
@@ -82,8 +82,9 @@ paper-faithful gcv
   -> proof that strategic steps are weak steps
 ```
 
-The next work should complete the weak-normal-form grammar and its bidirectional
-characterization. Postponement and confluence can then be built on the labelled relations.
+Phase 3 completed the weak-normal-form grammar and its bidirectional characterization.
+The next work should add labelled multi-step relations and prove local postponement of
+value garbage collection before moving to confluence.
 
 ## Updating this document
 

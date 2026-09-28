@@ -95,6 +95,25 @@ notation:50 source " ⟶ " target => Step source target
 def NormalForm (term : Term) : Prop :=
   ¬ ∃ target, Step term target
 
+/-- A weakly closed relation remains closed when placed in a larger weak context. -/
+theorem weakClosure_plugW {relation : Term → Term → Prop}
+    {source target : Term} (outer : WCtx)
+    (step : WeakClosure relation source target) :
+    WeakClosure relation (plugW outer source) (plugW outer target) := by
+  rcases step with ⟨inner, redex, contractum, root, sourceEq, targetEq⟩
+  -- Context composition turns the old redex position into a position below `outer`.
+  refine ⟨composeW outer inner, redex, contractum, root, ?_, ?_⟩
+  · simp [sourceEq]
+  · simp [targetEq]
+
+/-- Every term selected by a weak context is normal when the plugged term is normal. -/
+theorem normal_of_plugW_normal {term : Term} (context : WCtx)
+    (normal : NormalForm (plugW context term)) : NormalForm term := by
+  intro reducible
+  rcases reducible with ⟨target, step⟩
+  -- Any step from the selected term would lift to a step from the complete term.
+  exact normal ⟨plugW context target, weakClosure_plugW context step⟩
+
 /-- Any root step induces a weak step through the empty weak context. -/
 theorem root_implies_step {source target : Term} (h : RootStep source target) :
     Step source target := by

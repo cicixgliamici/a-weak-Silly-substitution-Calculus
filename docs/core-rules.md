@@ -96,9 +96,9 @@ applications and either side of an explicit substitution, but never under a lamb
 
 A term is in `NormalForm` when no weak step starts from it.
 
-The current syntactic normal-form grammar is partial: it covers lambdas, variables, and
-applications with an inert head, but not all normal explicit substitutions from the
-paper. The library proves soundness of this grammar, not completeness.
+The syntactic grammar includes all explicit-substitution cases and side conditions from
+Proposition 4.2. The library proves the bidirectional characterization
+`NormalForm t ↔ WeakNormalLike t`.
 
 ## Strategic reduction
 

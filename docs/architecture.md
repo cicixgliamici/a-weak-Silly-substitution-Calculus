@@ -83,12 +83,15 @@ definition.
 ### `SSC.Theorems`
 
 Contains results that connect independently defined layers. Complex files begin with a
-proof roadmap and arrange helper lemmas in dependency order.
+proof roadmap and arrange helper lemmas in dependency order. The current central result
+is `normalForm_iff_weakNormalLike`, which connects semantic and syntactic normality.
 
 ### Examples and tests
 
 `SSC.Examples` presents named terms and checked derivations. `SSC.Tests` contains compact
-regressions for computation and theorem application. Tests are part of `lake build`.
+regressions for computation and theorem application. `SSC.Tests.Metatheory` includes
+positive grammar examples and negative examples for all three root-rule families. Tests
+are part of `lake build`.
 
 ## Proof organization convention
 

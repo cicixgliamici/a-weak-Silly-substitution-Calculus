@@ -3,25 +3,44 @@ import SSC.Reduction
 /-!
 # Normal Forms and Inert Terms
 
-This module defines a sound but currently incomplete grammar of terms that cannot be
-evaluated under weak reduction. It introduces the mutually inductive properties `Inert`
-and `WeakNormalLike`, as well as `WeakAnswer`.
-
-The grammar currently covers variables, lambdas, and inert-headed applications. Adding
-the explicit-substitution cases and proving the converse characterization from Proposition
-4.2 is the next metatheoretic milestone after the paper-faithful Phase 2 semantics.
+This module defines the grammar of weak normal forms from Proposition 4.2. The side
+conditions on explicit substitutions separately exclude exponential and value-garbage-
+collection redexes.
 -/
 
 namespace SSC
 
 open Term
 
-inductive WeakAnswer : Term → Prop where
-  | lam :
-      WeakAnswer (Term.lam x t)
-
 mutual
 
+/--
+Weak answers are values possibly followed by normal explicit substitutions.
+
+The two substitution constructors are separate because an inert replacement can never
+trigger value garbage collection, while an answer replacement can. In the latter case,
+the occurrence condition keeps the substitution relevant.
+-/
+inductive WeakAnswer : Term → Prop where
+  | lam : WeakAnswer (Term.lam x t)
+
+  | esInert :
+      WeakAnswer body →
+      Inert replacement →
+      x ∉ shfv body →
+      WeakAnswer (Term.es body x replacement)
+
+  | esAnswer :
+      WeakAnswer body →
+      WeakAnswer replacement →
+      x ∈ fv body →
+      x ∉ shfv body →
+      WeakAnswer (Term.es body x replacement)
+
+/--
+Inert terms are variable-headed normal forms. They cannot become the function of a
+multiplicative redex, even after peeling a substitution context.
+-/
 inductive Inert : Term → Prop where
   | var :
       Inert (Term.var x)
@@ -31,6 +50,20 @@ inductive Inert : Term → Prop where
       WeakNormalLike n →
       Inert (Term.app i n)
 
+  | esInert :
+      Inert body →
+      Inert replacement →
+      x ∉ shfv body →
+      Inert (Term.es body x replacement)
+
+  | esAnswer :
+      Inert body →
+      WeakAnswer replacement →
+      x ∈ fv body →
+      x ∉ shfv body →
+      Inert (Term.es body x replacement)
+
+/-- The complete syntactic classification of weak normal forms. -/
 inductive WeakNormalLike : Term → Prop where
   | answer :
       WeakAnswer a →
@@ -75,6 +108,10 @@ theorem inert_not_value {t : Term} (h : Inert t) : ¬ IsValue t := by
   | var =>
       cases hv
   | app hi hn =>
+      cases hv
+  | esInert body replacement unused =>
+      cases hv
+  | esAnswer body replacement occurs unused =>
       cases hv
 
 end SSC

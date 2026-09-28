@@ -1,5 +1,6 @@
 import SSC.Reduction
 import SSC.Strategy
+import SSC.Theorems.WeakNormalImpliesNormal
 
 namespace SSC.Tests
 
@@ -44,5 +45,15 @@ example : app (lam 0 (var 0)) (var 1) ⟶m (var 0)[0 ↦ var 1] := by
 -- The CbS strategy is formally proved to be contained in weak SSC reduction.
 example {source target : Term} (h : source ⟶y target) : source ⟶ target := by
   exact yStep_implies_step h
+
+-- The complete grammar recognizes a normal explicit substitution with an inert copy.
+example : WeakNormalLike (es (lam 0 (var 0)) 1 (var 2)) := by
+  apply WeakNormalLike.answer
+  apply WeakAnswer.esInert WeakAnswer.lam Inert.var
+  simp [shfv]
+
+-- Proposition 4.2 is available in both directions.
+example {term : Term} : NormalForm term ↔ WeakNormalLike term := by
+  exact normalForm_iff_weakNormalLike
 
 end SSC.Tests

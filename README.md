@@ -20,8 +20,8 @@ The current library provides:
 - separately labelled weak closures and their generic union;
 - the four-rule Call-by-Silly strategy from the paper;
 - a checked proof that every CbS step is a generic weak SSC step;
-- a partial grammar of weak normal forms;
-- a checked proof that every term in that partial grammar is weak-normal;
+- the complete grammar of weak normal forms from Proposition 4.2;
+- a checked bidirectional characterization of semantic weak normality;
 - compile-time examples and tests.
 
 The exact correspondence—and current differences—between the Lean code and the paper
@@ -36,7 +36,9 @@ are recorded in [Paper implementation status](docs/paper-implementation.md).
    lists known gaps without overstating completeness.
 4. [Example reductions](docs/example-reduction.md) gives traces that agree with the Lean
    rules.
-5. [Evaluation strategies](docs/evaluation-strategies/README.md) provides background on
+5. [Metatheory in Lean](docs/metatheory-in-lean.md) explains how syntax, semantics, and
+   proofs relate in this repository.
+6. [Evaluation strategies](docs/evaluation-strategies/README.md) provides background on
    call-by-name, call-by-value, and call-by-need.
 
 The source paper and its LaTeX material are included under `docs/` for reference.
@@ -50,8 +52,8 @@ The source paper and its LaTeX material are included under `docs/` for reference
 | `SSC/Decompose.lean` | Experimental decomposition witnesses and predicates |
 | `SSC/Reduction.lean` | Labelled root rules, weak closures, their union, and normality |
 | `SSC/Strategy.lean` | Paper CbS contexts, strategic reduction, and inclusion in weak reduction |
-| `SSC/NormalForms.lean` | Partial syntax of weak answers and inert terms |
-| `SSC/Theorems/WeakNormalImpliesNormal.lean` | Soundness of the partial normal-form grammar |
+| `SSC/NormalForms.lean` | Weak answers, inert terms, and their explicit-substitution cases |
+| `SSC/Theorems/WeakNormalImpliesNormal.lean` | Bidirectional weak-normal-form characterization |
 | `SSC/Examples.lean` | Checked reduction examples |
 | `SSC/Tests/` | Compile-time regression tests |
 
@@ -81,8 +83,8 @@ For editor and Lake setup details, see [Lean 4 and Lake guide](docs/lean4-lake-g
 - New metatheory should first establish small structural lemmas, then local results, and
   only then global theorems.
 
-The next major milestone is the complete bidirectional characterization of weak normal
-forms, followed by postponement and confluence infrastructure.
+The next major milestone is labelled multi-step infrastructure and local postponement of
+value garbage collection, followed by confluence infrastructure.
 
 ## License
 
