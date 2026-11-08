@@ -7,20 +7,44 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Keep only the newest run for a pull request or branch.
+concurrency:
+  group: lean-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     name: Build and Verify
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check proof policy
+        run: bash scripts/check-proof-policy.sh
+
       - name: Install Elan
         run: |
           set -o pipefail
-          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          # Defer compiler selection to the committed lean-toolchain file.
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
+
+      - name: Report pinned toolchain
+        run: |
+          git ls-files --error-unmatch lean-toolchain
+          cat lean-toolchain
+          lean --version
+          lake --version
 
       - name: Build project and run tests
         run: lake build
+
+      - name: Run executable smoke check
+        run: lake exe LeanSsc

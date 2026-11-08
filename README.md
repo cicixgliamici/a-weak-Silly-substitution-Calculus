@@ -1,5 +1,7 @@
 # A Weak Silly Substitution Calculus
 
+[![Lean 4 CI](https://github.com/cicixgliamici/a-weak-Silly-substitution-Calculus/actions/workflows/lean.yml/badge.svg)](https://github.com/cicixgliamici/a-weak-Silly-substitution-Calculus/actions/workflows/lean.yml)
+
 This repository is a Lean 4 mechanization of a growing fragment of the weak Silly
 Substitution Calculus (SSC) introduced in *Mirroring Call-by-Need, or Values Acting
 Silly* by Beniamino Accattoli and Adrienne Lancelot.
@@ -29,6 +31,9 @@ are recorded in [Paper implementation status](docs/paper-implementation.md).
 
 ## Start here
 
+For a short review, follow [the reviewer guide](docs/reviewer-guide.md): it connects
+the central theorem to its definitions, proof structure, tests, and limitations.
+
 1. [Project architecture](docs/architecture.md) explains module boundaries and dependency
    direction.
 2. [Core rules](docs/core-rules.md) describes the semantics currently implemented.
@@ -41,7 +46,8 @@ are recorded in [Paper implementation status](docs/paper-implementation.md).
 6. [Evaluation strategies](docs/evaluation-strategies/README.md) provides background on
    call-by-name, call-by-value, and call-by-need.
 
-The source paper and its LaTeX material are included under `docs/` for reference.
+The source paper PDF is included under `docs/` for reference. Downloaded LaTeX
+sources are ignored by Git and are not part of the checkout.
 
 ## Source map
 
@@ -56,21 +62,32 @@ The source paper and its LaTeX material are included under `docs/` for reference
 | `SSC/Theorems/WeakNormalImpliesNormal.lean` | Bidirectional weak-normal-form characterization |
 | `SSC/Examples.lean` | Checked reduction examples |
 | `SSC/Tests/` | Compile-time regression tests |
+| `SSC/Sanity.lean` | Standalone computational and theorem smoke checks |
 
-`SSC.lean` is the library entry point. `Main.lean` builds the small `LeanSsc`
-executable and imports the complete checked development.
+`SSC.lean` is the public library entry point. `Main.lean` imports it to build the
+small `LeanSsc` smoke-check executable. Examples and tests are built separately
+by Lake and do not become imports of the public entry point.
 
 ## Build and verification
 
-The project pins Lean in `lean-toolchain` and has no external Lean package dependency.
+Install Elan first, then run these commands from the repository root. Elan selects
+the release recorded in the versioned `lean-toolchain` file. The project has no
+external Lean package dependency.
 
 ```text
 lake build
 lake exe LeanSsc
 ```
 
-`lake build` checks definitions, proofs, examples, and tests. GitHub Actions runs the same
-command for pushes and pull requests to `main`.
+`lake build` builds both the library and executable. The library uses `SSC.*` to
+check every Lean module under `SSC/`, including examples, tests, and standalone
+sanity checks. The executable only reports successful library loading.
+
+GitHub Actions runs the build and executable for pushes and pull requests to
+`main`, and supports manual runs. It also checks the committed toolchain and runs
+`bash scripts/check-proof-policy.sh`. This conservative text lint rejects proof
+placeholders and project axiom keywords in tracked Lean files, including comments;
+it is not an audit of the Lean kernel's standard axioms or theorem dependencies.
 
 For editor and Lake setup details, see [Lean 4 and Lake guide](docs/lean4-lake-guide.md).
 

@@ -6,7 +6,7 @@ namespace SSC.Tests
 
 open Term
 
--- Multi-step weak reduction (x[x ↦ u] ⟶ u[x ↦ u])
+-- One exponential weak step (x[x ↦ u] ⟶ u[x ↦ u]).
 example : (var 0)[0 ↦ var 1] ⟶ (var 1)[0 ↦ var 1] := by
   exact step_e_var_top 0 (var 1)
 

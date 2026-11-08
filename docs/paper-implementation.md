@@ -35,7 +35,7 @@ proposition numbers refer to the paper version stored in `docs/`.
 | Weak contextual closure | `SSC/Reduction.lean` | Implemented | Expressed uniformly through `WeakClosure` and `WCtx`. |
 | Weak normal-form grammar, Proposition 4.2 | `SSC/NormalForms.lean` | Implemented | Includes both explicit-substitution families and their `fv`/`shfv` side conditions. |
 | Normal-form characterization | `SSC/Theorems/WeakNormalImpliesNormal.lean` | Implemented | Proves `NormalForm t ↔ WeakNormalLike t`. |
-| GC postponement, Lemma 4.3 / Proposition 4.4 | — | Missing | Requires the paper-faithful `gcv` rule first. |
+| GC postponement, Lemma 4.3 / Proposition 4.4 | — | Missing | Root rules are present; labelled multi-step relations and local postponement proofs are still needed. |
 | Local termination, Proposition 4.5 | — | Missing | No transitive reduction framework is present yet. |
 | Local confluence and commutation, Lemmas 4.6–4.7 | — | Missing | Double contexts and deformation lemmas are absent. |
 | Confluence, Theorem 4.8 | — | Missing | Planned after the local rewriting infrastructure. |
@@ -48,7 +48,7 @@ proposition numbers refer to the paper version stored in `docs/`.
 | Strategy inclusion | `SSC/Strategy.lean` | Implemented | `yStep_implies_step` proves `YStep` is contained in generic weak reduction. |
 | CbS normal forms, Lemmas 11.2–11.3 | `SSC/Strategy.lean` | Partial | `Answer` and `StrictAnswer` are defined, but their normal-form characterizations are not proved. |
 | Strategy determinism/diamond, Proposition 11.4 | — | Missing | No such theorem is claimed by the library. |
-| Strategy GC postponement, Proposition 11.6 | — | Missing | Requires corrected contexts and step decomposition. |
+| Strategy GC postponement, Proposition 11.6 | — | Missing | CbS contexts are present; strategic step decomposition and postponement proofs are still needed. |
 | Silly MAM, Sections 9–10 | — | Missing | No machine states or transition system yet. |
 | Tight types and maximality, Section 12 | — | Missing | Long-term quantitative metatheory. |
 

@@ -1,0 +1,2 @@
+# Shell checks must also run after a Windows checkout.
+*.sh text eol=lf

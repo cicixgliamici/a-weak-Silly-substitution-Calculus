@@ -1,9 +1,11 @@
 name = "lean_ssc"
 version = "0.1.0"
-defaultTargets = ["LeanSsc"]
+# Build the entire library so standalone checks cannot escape verification.
+defaultTargets = ["SSC", "LeanSsc"]
 
 [[lean_lib]]
 name = "SSC"
+globs = ["SSC.*"]
 
 [[lean_exe]]
 name = "LeanSsc"

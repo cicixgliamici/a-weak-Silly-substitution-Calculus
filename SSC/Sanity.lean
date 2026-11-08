@@ -1,5 +1,11 @@
 import SSC.Reduction
 import SSC.Examples
+import SSC.Theorems.WeakNormalImpliesNormal
+
+/-!
+Standalone smoke checks retained alongside the focused tests in `SSC.Tests`.
+The library's recursive build glob includes this module without a public import.
+-/
 
 namespace SSC
 
@@ -9,10 +15,11 @@ open Term
   Basic computational sanity checks
 -/
 
-#eval size (Term.var 3)
-#eval size (Term.app (Term.var 1) (Term.var 2))
-#eval fv (Term.lam 0 (Term.app (Term.var 0) (Term.var 2)))
-#eval shfv (Term.lam 0 (Term.app (Term.var 0) (Term.var 2)))
+-- Equalities fail the build on regression; printing a computed value would not.
+example : size (Term.var 3) = 1 := by rfl
+example : size (Term.app (Term.var 1) (Term.var 2)) = 3 := by rfl
+example : fv (Term.lam 0 (Term.app (Term.var 0) (Term.var 2))) = [2] := by rfl
+example : shfv (Term.lam 0 (Term.app (Term.var 0) (Term.var 2))) = [] := by rfl
 
 /-
   Basic plugging checks for weak contexts

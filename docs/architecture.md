@@ -27,9 +27,12 @@ Syntax / Contexts / Reduction / Strategy
   -> Examples
   -> Tests
 
-All library modules
+Public definitions and theorems
   -> SSC.lean
   -> Main.lean
+
+Examples / Tests / Sanity
+  -> built independently by the SSC.* library glob
 ```
 
 Imports should follow this direction. A lower layer must not import a theorem from a
@@ -91,7 +94,9 @@ is `normalForm_iff_weakNormalLike`, which connects semantic and syntactic normal
 `SSC.Examples` presents named terms and checked derivations. `SSC.Tests` contains compact
 regressions for computation and theorem application. `SSC.Tests.Metatheory` includes
 positive grammar examples and negative examples for all three root-rule families. Tests
-are part of `lake build`.
+are part of `lake build`. `SSC.Sanity` retains standalone smoke checks, including
+computational equalities and applications of normal-form theorems. Neither tests
+nor examples are imported by the public entry point `SSC.lean`.
 
 ## Proof organization convention
 
@@ -115,6 +120,8 @@ which induction hypothesis closes it. Comments should not merely restate tactic 
 
 ## Verification boundary
 
-`lake build` is the authoritative check. It verifies all imported examples and tests but
+`lake build` is the authoritative check. Its default targets are `SSC` and `LeanSsc`;
+the `SSC.*` library glob verifies all modules under `SSC/`, including standalone
+examples and tests. This avoids relying on public imports for test coverage, but
 does not establish correspondence with the paper by itself. That correspondence is a
 separate review obligation tracked in [Paper implementation status](paper-implementation.md).

@@ -5,5 +5,3 @@ import SSC.Reduction
 import SSC.Strategy
 import SSC.NormalForms
 import SSC.Theorems.WeakNormalImpliesNormal
-import SSC.Examples
-import SSC.Tests
